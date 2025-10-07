@@ -1,92 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recipes</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/recipes.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/recipes.css" />
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="navbar-container">
-            <h2 class="navbar-brand">Recipe Collection</h2>
-            <div class="navbar-right">
-                <span class="user-greeting">Welcome, <span id="userName">Emily</span>!</span>
-                <button class="btn-logout" id="logoutBtn">LOGOUT</button>
-            </div>
+      <div class="navbar-container">
+        <h2 class="navbar-brand">Recipe Collection</h2>
+        <div class="navbar-right">
+          <span class="user-greeting"
+            >Welcome, <span id="userName">Emily</span>!</span
+          >
+          <button class="btn-logout" id="logoutBtn">LOGOUT</button>
         </div>
+      </div>
     </nav>
 
     <main class="main-container">
-        <section class="header-section">
-            <h1>Pujo Recipe Collection</h1>
-            <p>Discover and manage your favorite recipes</p>
-        </section>
+      <section class="header-section">
+        <h1>Pujo Recipe Collection</h1>
+        <p>Discover and manage your favorite recipes</p>
+      </section>
 
-        <section class="search-filter-section">
-            <div class="search-container">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    class="search-input" 
-                    placeholder="Search recipes..."
-                >
-                <button class="search-btn">
-                    <span class="search-icon">🔍</span>
-                </button>
-            </div>
-            
-            <select id="cuisineFilter" class="filter-select">
-                <option value="">All Cuisines</option>
-                <option value="Italian">Italian</option>
-                <option value="Asian">Asian</option>
-                <option value="American">American</option>
-                <option value="Mexican">Mexican</option>
-                <option value="Mediterranean">Mediterranean</option>
-                <option value="Indian">Indian</option>
-                <option value="Thai">Thai</option>
-                <option value="Japanese">Japanese</option>
-                <option value="Pakistani">Pakistani</option>
-            </select>
-
-            <div class="recipe-count">
-                <span id="recipeCount">Showing 9 of 30 recipes</span>
-            </div>
-        </section>
-
-        <div class="loading-container" id="loadingState" style="display: none;">
-            <div class="spinner"></div>
-            <p>Loading recipes...</p>
+      <section class="search-filter-section">
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search recipes..."
+          />
+          <button class="search-btn">
+            <span class="search-icon">🔍</span>
+          </button>
         </div>
 
-        <div class="error-container" id="errorMessage" style="display: none;">
-            <p>Something went wrong. Please try again later.</p>
-        </div>
+        <select id="cuisineFilter" class="filter-select">
+          <option value="">All Cuisines</option>
+          <option value="Italian">Italian</option>
+          <option value="Asian">Asian</option>
+          <option value="American">American</option>
+          <option value="Mexican">Mexican</option>
+          <option value="Mediterranean">Mediterranean</option>
+          <option value="Indian">Indian</option>
+          <option value="Thai">Thai</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Pakistani">Pakistani</option>
+        </select>
 
-        <div class="no-results" id="noResults" style="display: none;">
-            <p>No recipes found matching your search.</p>
+        <div class="recipe-count">
+          <span id="recipeCount">Showing 9 of 30 recipes</span>
         </div>
+      </section>
 
-        <section class="recipes-grid" id="recipesGrid">
-        </section>
+      <div class="loading-container" id="loadingState" style="display: none">
+        <div class="spinner"></div>
+        <p>Loading recipes...</p>
+      </div>
 
-        <div class="show-more-container" id="showMoreContainer" style="display: none;">
-            <button class="btn-show-more" id="showMoreBtn">Load More Recipes</button>
-        </div>
+      <div class="error-container" id="errorMessage" style="display: none">
+        <p>Something went wrong. Please try again later.</p>
+      </div>
+
+      <div class="no-results" id="noResults" style="display: none">
+        <p>No recipes found matching your search.</p>
+      </div>
+
+      <section class="recipes-grid" id="recipesGrid"></section>
+
+      <div
+        class="show-more-container"
+        id="showMoreContainer"
+        style="display: none"
+      >
+        <button class="btn-show-more" id="showMoreBtn">
+          Load More Recipes
+        </button>
+      </div>
     </main>
 
-    <div class="modal-overlay" id="modalOverlay" style="display: none;">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h2 id="modalTitle">Recipe Name</h2>
-                <button class="modal-close" id="modalClose">&times;</button>
-            </div>
-            <div class="modal-content" id="modalContent">
-            </div>
+    <div class="modal-overlay" id="modalOverlay" style="display: none">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h2 id="modalTitle">Recipe Name</h2>
+          <button class="modal-close" id="modalClose">&times;</button>
         </div>
+        <div class="modal-content" id="modalContent"></div>
+      </div>
     </div>
 
-    <script src="js/recipes.js"></script>
-</body>
+    <script src="js/recipes/api.js"></script>
+    <script src="js/auth/logout.js"></script>
+  </body>
 </html>
