@@ -57,14 +57,29 @@ function renderRecipes(filtered = null) {
     card.dataset.id = recipe.id;
     card.style.cursor = "pointer";
     card.innerHTML = `
-            <img src="${recipe.image}" alt="${recipe.name}" class="recipe-image">
-            <div class="recipe-info">
-                <h3 class="recipe-name">${recipe.name}</h3>
-                <p class="recipe-meta">${recipe.cuisine} • ${recipe.difficulty}</p>
-                <p class="recipe-rating">⭐ ${recipe.rating} (${recipe.reviewCount} reviews)</p>
-                <button class="btn-view-recipe" data-id="${recipe.id}">View Details</button>
-            </div>
-        `;
+  <img src="${recipe.image}" alt="${recipe.name}" class="recipe-image">
+
+  <div class="recipe-content">
+    <h3 class="recipe-name">${recipe.name}</h3>
+
+    <div class="recipe-meta">
+      <span>⏱️ ${recipe.prepTimeMinutes} mins</span>
+      <span>${recipe.difficulty}</span>
+      <span>${recipe.cuisine}</span>
+    </div>
+
+    <p class="recipe-ingredients">
+      <strong>Ingredients:</strong> 
+      ${recipe.ingredients.slice(0, 3).join(", ")} +${Math.max(recipe.ingredients.length - 3, 0)} more
+    </p>
+
+    <div class="recipe-bottom">
+      <div class="recipe-rating">⭐ ${recipe.rating.toFixed(1)}</div>
+      <button class="btn-view-recipe" data-id="${recipe.id}">VIEW FULL RECIPE</button>
+    </div>
+  </div>
+`;
+
     recipesGrid.appendChild(card);
   });
 
@@ -78,16 +93,26 @@ function filterRecipes() {
   const selectedCuisine = cuisineFilter.value;
 
   const filtered = allRecipes.filter((recipe) => {
-    const matchesSearch = recipe.name.toLowerCase().includes(searchTerm);
+    const searchableText = `
+      ${recipe.name}
+      ${recipe.cuisine}
+      ${recipe.ingredients.join(" ")}
+      ${(recipe.tags || []).join(" ")}
+    `.toLowerCase();
+
+    const matchesSearch = searchableText.includes(searchTerm);
+
     const matchesCuisine = selectedCuisine
       ? recipe.cuisine === selectedCuisine
       : true;
+
     return matchesSearch && matchesCuisine;
   });
 
   displayedCount = 0;
   renderRecipes(filtered);
 }
+
 
 function openModal(recipeId) {
   const recipe = allRecipes.find((r) => r.id == recipeId);
@@ -122,6 +147,11 @@ function openModal(recipeId) {
                 <div class="info-value">${
                   recipe.caloriesPerServing
                 } per serving</div>
+            </div>
+        </div>
+        <div class="modal-section">
+            <div class="recipe-tags">
+                ${recipe.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
             </div>
         </div>
         <div class="modal-section">
