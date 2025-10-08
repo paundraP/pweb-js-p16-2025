@@ -60,13 +60,18 @@ function renderRecipes(filtered = null) {
             <img src="${recipe.image}" alt="${recipe.name}" class="recipe-image">
             <div class="recipe-info">
                 <h3 class="recipe-name">${recipe.name}</h3>
-                <p class="recipe-meta">${recipe.cuisine} • ${recipe.difficulty}</p>
+                <p class="recipe-meta"> ${recipe.prepTimeMinutes} mins • ${recipe.cuisine} • ${recipe.difficulty}</p>
                 <p class="recipe-rating">⭐ ${recipe.rating} (${recipe.reviewCount} reviews)</p>
+                <p class="recipe-ingredients">
+                <strong>Ingredients:</strong> 
+                ${recipe.ingredients.slice(0, 3).join(", ")} +${Math.max(recipe.ingredients.length - 3, 0)} more
+                </p>
                 <button class="btn-view-recipe" data-id="${recipe.id}">View Details</button>
             </div>
         `;
     recipesGrid.appendChild(card);
   });
+
 
   recipeCount.textContent = `Showing ${displayedCount} of ${recipes.length} recipes`;
   showMoreContainer.style.display =
@@ -78,16 +83,26 @@ function filterRecipes() {
   const selectedCuisine = cuisineFilter.value;
 
   const filtered = allRecipes.filter((recipe) => {
-    const matchesSearch = recipe.name.toLowerCase().includes(searchTerm);
+    const searchableText = `
+      ${recipe.name}
+      ${recipe.cuisine}
+      ${recipe.ingredients.join(" ")}
+      ${(recipe.tags || []).join(" ")}
+    `.toLowerCase();
+
+    const matchesSearch = searchableText.includes(searchTerm);
+
     const matchesCuisine = selectedCuisine
       ? recipe.cuisine === selectedCuisine
       : true;
+
     return matchesSearch && matchesCuisine;
   });
 
   displayedCount = 0;
   renderRecipes(filtered);
 }
+
 
 function openModal(recipeId) {
   const recipe = allRecipes.find((r) => r.id == recipeId);
